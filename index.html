@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whac-A-Mole</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div id="startScreen">
+    <button id="btStart">Start</button>
+    </div>
+
+    <div id="gameScreen" class="hidden">
+        <div id="hud">
+            <span> Lives: <span> 3 </span> </span>
+            <span> Score: <span id="scoreSpan"> 0 </span> </span>
+            <span> Highscore: <span> 0 </span> </span>
+        </div>
+        <div id="game"> 
+            
+        </div>
+    </div>
+
+    <div id="ScoreScreen" class="hidden">
+    <h2 id="end-message"></h2>
+    <p>Twój wynik: <span id="final-score"></span></p>
+    <button id="btRestart">Play again</button>
+    </div>
+</body>
+</html>
