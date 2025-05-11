@@ -1,11 +1,12 @@
 let currentScore = 0;
 let currentCircle;
 let isGameOver = false;
+let circleTimeoutId;
+
 
 const gameArea = document.getElementById('game');
 const btStart = document.getElementById('btStart');
 const btRestart = document.getElementById('btRestart');
-
 
 if (localStorage.getItem('bestScore') === null) {
     localStorage.setItem('bestScore', 0);
@@ -35,10 +36,22 @@ function restartGame() {
 
 
 function addTarget() {
+
     const circle = document.createElement('div');
     circle.classList.add('circle');
     gameArea.appendChild(circle);
+    const circleSize = 50;
+    const area = gameArea.getBoundingClientRect();
+
+    const randomY = Math.random()*(area.height-circleSize)
+    const randomX = Math.random()*(area.width-circleSize)
+
+    circle.style.left=randomX+'px';
+    circle.style.top=randomY+'px';
+
     currentCircle = circle;
+
+    CircleLifeTimer();
 
     currentCircle.addEventListener('click', () => {
         if (isGameOver) return;
@@ -53,10 +66,22 @@ function circleRemove() {
     if (currentCircle) 
     {
         currentCircle.remove();
+        clearTimeout(circleTimeoutId);
         currentCircle = null;
     }
 }
 
+function CircleLifeTimer()
+{
+
+    clearTimeout(circleTimeoutId);
+
+    circleTimeoutId=setTimeout(() => {
+                        circleRemove()
+                        circleMiss()
+                        addTarget()
+                    }, 4000);
+}
 
 function circleHit() {
     if (isGameOver) return;
@@ -124,7 +149,5 @@ gameArea.addEventListener('click', (event) => {
         circleMiss();
     }
 });
-
-
 btStart.addEventListener('click', startGame);
 btRestart.addEventListener('click', restartGame);
