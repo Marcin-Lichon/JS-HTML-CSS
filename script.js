@@ -4,6 +4,7 @@ let isGameOver = false;
 let circleTimeoutId;
 
 
+
 const gameArea = document.getElementById('game');
 const btStart = document.getElementById('btStart');
 const btRestart = document.getElementById('btRestart');
@@ -37,10 +38,28 @@ function restartGame() {
 
 function addTarget() {
 
+    const selectedDifficulty = document.getElementById('difficulty').value;
     const circle = document.createElement('div');
     circle.classList.add('circle');
     gameArea.appendChild(circle);
-    const circleSize = 50;
+    let circleSize;
+    switch(selectedDifficulty){
+
+        case 'easy': 
+        circleSize = 70;
+        break;
+
+        case 'medium':
+        circleSize = 50;
+        break;
+
+        case 'hard':
+        circleSize = Math.random() * (50 - 30) + 30;
+        break;
+   }
+       
+    circle.style.width = circleSize + 'px';
+    circle.style.height = circleSize + 'px';
     const area = gameArea.getBoundingClientRect();
 
     const randomY = Math.random()*(area.height-circleSize)
@@ -73,14 +92,30 @@ function circleRemove() {
 
 function CircleLifeTimer()
 {
-
+    const selectedDifficulty = document.getElementById('difficulty').value;
     clearTimeout(circleTimeoutId);
+
+    let diffTimer;
+    switch(selectedDifficulty){
+
+        case 'easy': 
+        diffTimer = 2000;
+        break;
+
+        case 'medium':
+        diffTimer = 3000;
+        break;
+
+        case 'hard':
+        diffTimer = 2000;
+        break;
+   }
 
     circleTimeoutId=setTimeout(() => {
                         circleRemove()
                         circleMiss()
                         addTarget()
-                    }, 4000);
+                    }, diffTimer);
 }
 
 function circleHit() {

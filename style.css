@@ -83,3 +83,20 @@ button:hover {
     opacity: 1;
   }
 }
+
+#difficulty {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 2px solid #4CAF50;
+  background-color: #2e2e40;
+  color: #f4f4f4;
+  margin-top: 20px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+#difficulty:hover,
+#difficulty:focus {
+  border-color: #33df3c;
+}
