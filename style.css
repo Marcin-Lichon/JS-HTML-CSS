@@ -1,4 +1,3 @@
-/* Reset i podstawowe ustawienia */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -21,7 +20,7 @@ body {
   display: none;
 }
 
-/* Start i wynik */
+
 #startScreen,
 #scoreScreen {
   text-align: center;
@@ -42,7 +41,7 @@ button:hover {
   background-color: #33df3c;
 }
 
-/* HUD z wynikiem i życiami */
+
 #hud {
   display: flex;
   justify-content: space-around;
@@ -52,7 +51,7 @@ button:hover {
   font-size: 1.1rem;
 }
 
-/* Plansza gry */
+
 #game {
   position: relative;
   width: 90vw;
@@ -64,7 +63,7 @@ button:hover {
   overflow: hidden;
 }
 
-/* Kółko – domyślna stylizacja */
+
 .circle {
   position: absolute;
   width: 60px;

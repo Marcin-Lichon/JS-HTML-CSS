@@ -174,8 +174,7 @@ function settingHighScore() {
     const bestScore = parseInt(localStorage.getItem('bestScore'));
 
     if (currentScore > bestScore) 
-        localStorage.setItem('bestScore', currentScore);
-    
+        localStorage.setItem('bestScore', currentScore); 
 }
 
 
