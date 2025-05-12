@@ -2,8 +2,8 @@ let currentScore = 0;
 let currentCircle;
 let isGameOver = false;
 let circleTimeoutId;
-
-
+let diffTimer;
+let circleSize;
 
 const gameArea = document.getElementById('game');
 const btStart = document.getElementById('btStart');
@@ -14,9 +14,36 @@ if (localStorage.getItem('bestScore') === null) {
 }
 
 
+function difficultyLevel()
+{
+ const selectedDifficulty = document.getElementById('difficulty').value;
+
+    switch(selectedDifficulty)
+    {
+
+        case 'easy': 
+        diffTimer = 2000;
+        circleSize = 70;
+        break;
+
+        case 'medium':
+        diffTimer = 3000;
+        circleSize = 50;
+        break;
+
+        case 'hard':
+        diffTimer = 2000;
+        circleSize = 25;
+        break;
+   }
+}
+
+
 function startGame() {
     isGameOver = false;
     currentScore = 0;
+
+    difficultyLevel();
     
     document.getElementById('startScreen').classList.add('hidden');
     document.getElementById('scoreScreen').classList.add('hidden');
@@ -38,28 +65,13 @@ function restartGame() {
 
 function addTarget() {
 
-    const selectedDifficulty = document.getElementById('difficulty').value;
     const circle = document.createElement('div');
     circle.classList.add('circle');
     gameArea.appendChild(circle);
-    let circleSize;
-    switch(selectedDifficulty){
 
-        case 'easy': 
-        circleSize = 70;
-        break;
-
-        case 'medium':
-        circleSize = 50;
-        break;
-
-        case 'hard':
-        circleSize = Math.random() * (50 - 30) + 30;
-        break;
-   }
-       
     circle.style.width = circleSize + 'px';
     circle.style.height = circleSize + 'px';
+
     const area = gameArea.getBoundingClientRect();
 
     const randomY = Math.random()*(area.height-circleSize)
@@ -95,21 +107,6 @@ function CircleLifeTimer()
     const selectedDifficulty = document.getElementById('difficulty').value;
     clearTimeout(circleTimeoutId);
 
-    let diffTimer;
-    switch(selectedDifficulty){
-
-        case 'easy': 
-        diffTimer = 2000;
-        break;
-
-        case 'medium':
-        diffTimer = 3000;
-        break;
-
-        case 'hard':
-        diffTimer = 2000;
-        break;
-   }
 
     circleTimeoutId=setTimeout(() => {
                         circleRemove()
