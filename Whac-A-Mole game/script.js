@@ -141,7 +141,7 @@ function circleHit() {
 function circleMiss() {
     if (isGameOver) return;
 
-    let lives = parseInt(scoreLives.textContent);
+    let lives = parseInt(scoreLives.textContent, 10);
 
     if (lives > 0)
     {
