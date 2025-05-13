@@ -17,6 +17,7 @@ const scoreLives = document.getElementById("scoreLives");
 
 initializeBestScore();
 
+
 function initializeBestScore() {
     if (localStorage.getItem('bestScore') === null) {
     localStorage.setItem('bestScore', 0);
@@ -62,6 +63,7 @@ function startGame() {
     addCircle();
 }
 
+
 function resetStats() {
     currentScore = 0;
     highScoreSpan.textContent = localStorage.getItem('bestScore');
@@ -69,9 +71,11 @@ function resetStats() {
     document.getElementById("scoreLives").textContent = 3;
 }
 
+
 function restartGame() {
     startGame(); 
 }
+
 
 function onCircleClick() {
     if (isGameOver) return;
@@ -79,6 +83,7 @@ function onCircleClick() {
     circleRemove();
     addCircle();
 }
+
 
 function addCircle() {
 
@@ -115,6 +120,7 @@ function circleRemove() {
     }
 }
 
+
 function circleLifeTimer() {
     clearTimeout(circleTimeoutId);
 
@@ -125,6 +131,7 @@ function circleLifeTimer() {
                         addCircle()
                     }, diffTimer);
 }
+
 
 function circleHit() {
     if (isGameOver) return;
@@ -190,6 +197,7 @@ gameArea.addEventListener('click', (event) => {
         circleMiss();
     }
 });
+
 
 btStart.addEventListener('click', startGame);
 btRestart.addEventListener('click', restartGame);
