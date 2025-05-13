@@ -31,17 +31,17 @@ function setDifficulty() {
     {
 
         case 'easy': 
-        diffTimer = 2000;
+        diffTimer = 3000;
         circleSize = 70;
         break;
 
         case 'medium':
-        diffTimer = 3000;
+        diffTimer = 2000;
         circleSize = 50;
         break;
 
         case 'hard':
-        diffTimer = 2000;
+        diffTimer = 1000;
         circleSize = 25;
         break;
    }
