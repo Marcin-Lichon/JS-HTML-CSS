@@ -8,13 +8,19 @@ let circleSize;
 const gameArea = document.getElementById('game');
 const btStart = document.getElementById('btStart');
 const btRestart = document.getElementById('btRestart');
+const startScreen = document.getElementById('startScreen');
+const scoreScreen = document.getElementById('scoreScreen');
+const gameScreen = document.getElementById('gameScreen');
+const highScoreSpan = document.getElementById("highScoreSpan");
+const scoreSpan = document.getElementById("scoreSpan");
+const scoreLives = document.getElementById("scoreLives");
 
 if (localStorage.getItem('bestScore') === null) {
     localStorage.setItem('bestScore', 0);
 }
 
 
-function difficultyLevel()
+function settingDifficulty()
 {
  const selectedDifficulty = document.getElementById('difficulty').value;
 
@@ -41,22 +47,24 @@ function difficultyLevel()
 
 function startGame() {
     isGameOver = false;
-    currentScore = 0;
 
-    difficultyLevel();
+    settingDifficulty();
     
-    document.getElementById('startScreen').classList.add('hidden');
-    document.getElementById('scoreScreen').classList.add('hidden');
-    document.getElementById('gameScreen').classList.remove('hidden');
+    startScreen.classList.add('hidden');
+    scoreScreen.classList.add('hidden');
+    gameScreen.classList.remove('hidden');
 
-    document.getElementById("highScoreSpan").textContent = localStorage.getItem('bestScore');
-    document.getElementById("scoreSpan").textContent = currentScore;
-    document.getElementById("scoreLives").textContent = 3;
-
+    statsReset()
     circleRemove();
     addTarget();
 }
 
+function statsReset(){
+    currentScore = 0;
+    highScoreSpan.textContent = localStorage.getItem('bestScore');
+    scoreSpan.textContent = currentScore;
+    document.getElementById("scoreLives").textContent = 3;
+}
 
 function restartGame() {
     startGame(); 
@@ -104,7 +112,6 @@ function circleRemove() {
 
 function CircleLifeTimer()
 {
-    const selectedDifficulty = document.getElementById('difficulty').value;
     clearTimeout(circleTimeoutId);
 
 
@@ -119,7 +126,7 @@ function circleHit() {
     if (isGameOver) return;
 
     currentScore++;
-    document.getElementById("scoreSpan").textContent = currentScore;
+    scoreSpan.textContent = currentScore;
 
     if (currentScore >= 25) {
         gameOver(true);
@@ -130,7 +137,6 @@ function circleHit() {
 function circleMiss() {
     if (isGameOver) return;
 
-    const scoreLives = document.getElementById("scoreLives");
     let lives = parseInt(scoreLives.textContent);
 
     if (lives > 0)
@@ -151,8 +157,8 @@ function gameOver(result) {
 
     circleRemove(); 
 
-    document.getElementById('gameScreen').classList.add('hidden');
-    document.getElementById('scoreScreen').classList.remove('hidden');
+    gameScreen.classList.add('hidden');
+    score.classList.remove('hidden');
 
     const yourScore = document.getElementById('finalScore');
     const highScore = document.getElementById('highScore');
@@ -180,5 +186,6 @@ gameArea.addEventListener('click', (event) => {
         circleMiss();
     }
 });
+
 btStart.addEventListener('click', startGame);
 btRestart.addEventListener('click', restartGame);
