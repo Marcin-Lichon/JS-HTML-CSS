@@ -1,0 +1,139 @@
+#gameArea {
+  display: grid;
+  grid-template-columns: repeat(4, 100px);
+  grid-template-rows: repeat(4, 100px);
+  gap: 15px;
+}
+.card {
+  width: 70px;
+  height: 70px;
+  background-color: #6320b9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #FFFF;
+  border-radius: 12%;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+body {
+  background-color: #1e1e2f;
+  color: #f4f4f4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 1rem;
+}
+.hidden {
+  display: none !important;
+}
+button {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+button:hover {
+  background-color: #33df3c;
+}
+#mainScreen {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+#inGameRakings {
+  margin-top: 30px;
+  text-align: center;
+}
+#inGameRakings h1 {
+  margin-bottom: 1rem;
+}
+#inGameRakings p {
+  background-color: #2e2e40;
+  padding: 10px;
+  border-radius: 8px;
+  margin: 10px auto;
+  max-width: 300px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.1rem;
+}
+#mainRankings {
+  margin-top: 30px;
+  text-align: center;
+}
+#mainRankings h1 {
+  margin-bottom: 30px;
+}
+#mainRankings .rankingEntry {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #2e2e40;
+  padding: 10px 20px;
+  border-radius: 8px;
+  max-width: 500px;
+}
+#mainRankings .rankingEntry .rankingText {
+  flex-grow: 1;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+#mainRankings .rankingEntry .deleteButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  min-width: 80px;
+}
+#mainRankings .rankingEntry button {
+  padding: 8px 16px;
+  font-size: 1rem;
+  margin: 10px;
+}
+#inserData {
+  margin-top: 30px;
+}
+#inserData form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #2e2e40;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 300px;
+  margin: auto;
+}
+#inserData form label {
+  font-size: 1rem;
+}
+#inserData form input {
+  padding: 10px;
+  border: 2px solid #4CAF50;
+  border-radius: 6px;
+  background-color: #1e1e2f;
+  color: white;
+  outline: none;
+}
+#inserData form input:focus {
+  border-color: #33df3c;
+}
+#inserData form button {
+  margin-top: 10px;
+}
