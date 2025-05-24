@@ -11,6 +11,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #6320b9;
+  border-radius: 12%;
+}
+.flipped {
+  width: 70px;
+  height: 70px;
+  background-color: #6320b9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: #FFFF;
   border-radius: 12%;
 }
