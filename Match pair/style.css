@@ -117,10 +117,10 @@ button:hover {
   font-size: 1rem;
   margin: 10px;
 }
-#inserData {
+#insertData {
   margin-top: 30px;
 }
-#inserData form {
+#insertData form {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -130,10 +130,10 @@ button:hover {
   max-width: 300px;
   margin: auto;
 }
-#inserData form label {
+#insertData form label {
   font-size: 1rem;
 }
-#inserData form input {
+#insertData form input {
   padding: 10px;
   border: 2px solid #4CAF50;
   border-radius: 6px;
@@ -141,9 +141,9 @@ button:hover {
   color: white;
   outline: none;
 }
-#inserData form input:focus {
+#insertData form input:focus {
   border-color: #33df3c;
 }
-#inserData form button {
+#insertData form button {
   margin-top: 10px;
 }

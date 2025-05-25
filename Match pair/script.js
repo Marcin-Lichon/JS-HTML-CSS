@@ -2,7 +2,15 @@ const gameArea = document.querySelector('#gameArea');
 const mainScreen = document.getElementById("mainScreen")
 const gameScreen = document.getElementById("gameScreen")
 const mainRankings = document.getElementById("mainRankings")  
-let counter;
+const insertData = document.getElementById("insertData")  
+let firstCard;
+let secondCard;
+let counter=0;
+let lockGame;
+let timerID;
+let gameTime = 0;           
+let gameTimerInterval = null;  
+
 
 function StartGame(){
     CreateCards();
@@ -45,6 +53,8 @@ function RestartGame(){
     DeleteCards();
     DeleteListnerFromCards();
     CreateCards();
+    RestartGameTimer();
+    counter=0;
 }
 
 function DeleteListnerFromCards()
@@ -61,16 +71,78 @@ function DeleteCards(){
 }
 
 function FlipCard(e){
-    counter++;
+    
+    if(!gameTimerInterval)
+        StartGameTimer();
+
+    if(lockGame) return;
+
     const clickedCard = e.currentTarget;
-    clickedCard.classList.toggle("flipped");
+
+    if (clickedCard === firstCard || clickedCard.classList.contains('flipped')) return;
+
+    clickedCard.classList.add("flipped");
+
+     if (!firstCard){
+        firstCard = clickedCard;
+        return;
+    }
+
+    secondCard = clickedCard;
+    lockGame = true;
+
+    CheckCards();
 };
 
-function CheckCards(counter)
-{
-
+function CheckCards(){
+    if(firstCard.dataset.letter === secondCard.dataset.letter){
+        firstCard.removeEventListener('click', FlipCard);
+        secondCard.removeEventListener('click', FlipCard);
+        console.log("para");
+        ResetBoard();
+        counter++;
+        if(counter==8)
+            GameEnding();
+    }
+    else{
+        timerID = setTimeout(() => {
+                firstCard.classList.remove("flipped");
+                secondCard.classList.remove("flipped");
+                ResetBoard();
+            }, 1000);
+    }
 }
 
+function ResetBoard() {
+    [firstCard, secondCard] = [null, null];
+    lockGame = false;
+    clearTimeout(timerID);
+}
+
+function GameEnding(){
+    console.log("koniec");
+    mainScreen.classList.add('hidden');
+    insertData.classList.remove('hidden');
+     RestartGameTimer()
+}
+
+ function StartGameTimer(){
+    gameTime = 0;
+    document.getElementById("timer").innerText = "Czas: 0 s";
+
+    gameTimerInterval = setInterval(() => {
+        gameTime++;
+        document.getElementById("timer").innerText = `Czas: ${gameTime} s`;
+    }, 1000);
+ }
+
+ function RestartGameTimer(){
+    document.getElementById("timer").innerText = "Czas: 0 s";
+    clearInterval(gameTimerInterval);
+    gameTimerInterval=null;
+
+}
+ 
 btnGameStart.addEventListener('click',StartGame);
 btnRankings.addEventListener('click',ShowRankings);
 btnRestartGame.addEventListener('click',RestartGame);
