@@ -10,6 +10,8 @@ let lockGame;
 let timerID;
 let gameTime = 0;           
 let gameTimerInterval = null;  
+let moves = 0;       
+let nick;   
 
 
 function StartGame(){
@@ -95,10 +97,10 @@ function FlipCard(e){
 };
 
 function CheckCards(){
+    CountingMoves();
     if(firstCard.dataset.letter === secondCard.dataset.letter){
         firstCard.removeEventListener('click', FlipCard);
         secondCard.removeEventListener('click', FlipCard);
-        console.log("para");
         ResetBoard();
         counter++;
         if(counter==8)
@@ -111,6 +113,13 @@ function CheckCards(){
                 ResetBoard();
             }, 1000);
     }
+    console.log(counter);
+}
+
+function CountingMoves()
+{
+    moves++;
+    document.getElementById("moves").innerText = 'Moves: ' + moves;
 }
 
 function ResetBoard() {
@@ -123,26 +132,30 @@ function GameEnding(){
     console.log("koniec");
     mainScreen.classList.add('hidden');
     insertData.classList.remove('hidden');
-     RestartGameTimer()
+    RestartGameTimer()
 }
 
  function StartGameTimer(){
     gameTime = 0;
-    document.getElementById("timer").innerText = "Czas: 0 s";
+    document.getElementById("timer").innerText = "Time: 0 s";
 
     gameTimerInterval = setInterval(() => {
         gameTime++;
-        document.getElementById("timer").innerText = `Czas: ${gameTime} s`;
+        document.getElementById("timer").innerText = 'Time: ' + gameTime + 's';
     }, 1000);
  }
 
  function RestartGameTimer(){
-    document.getElementById("timer").innerText = "Czas: 0 s";
+    document.getElementById("timer").innerText = "Time: 0 s";
     clearInterval(gameTimerInterval);
     gameTimerInterval=null;
-
+    document.getElementById("moves").innerText = "Moves: 0";
+}
+function GetNick(){
+    nick = document.getElementById("nick").value.trim();
 }
  
 btnGameStart.addEventListener('click',StartGame);
 btnRankings.addEventListener('click',ShowRankings);
 btnRestartGame.addEventListener('click',RestartGame);
+btnSubmit.addEventListener('click',GetNick);
