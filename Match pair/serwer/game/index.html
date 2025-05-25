@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory game</title>
+    <link rel="stylesheet" href="style.css">
+     <script src="script.js" defer></script>
+</head>
+<body>
+    <head>
+        
+    </head>
+    <main>
+
+        <div id="mainScreen"> 
+            <h1>Memory game</h1>
+            <button id="btnGameStart"> Play game</button>
+            <button id="btnRankings"> Rankings </button>
+        </div>
+
+        <div id="gameScreen" class="hidden">
+            <div id="timer">Time: 0 s</div>
+            <div id="moves">Moves: 0 </div>
+            <div id="gameArea">
+ 
+            </div>
+            <div>
+                <button id="btnRestartGame"> Restart </button>
+            </div>
+              <div id="insertData" class="hidden">
+                <form >
+                    <label> Your nickname </label>
+                    <input type="text" id="nick">
+                    <button  id="btnSubmit" type="submit"> Send </button>
+                </form>
+            </div>
+            <div id="inGameRakings" >
+
+        
+
+            </div>
+
+        </div>
+
+        <div id="mainRankings" class="hidden">
+
+          <h1> High scores </h1>
+
+            <div class="rankingEntry">
+                <div class="rankingText">
+                    Test - 24 ruchy, 55s
+                </div>
+                <div class="deleteButton">
+                    <button>Delete</button>
+                </div>
+            </div>
+
+
+
+            <div class="rankingEntry">
+                <div class="rankingText">
+                    Test - 24 ruchy, 55s
+                </div>
+                <div class="deleteButton">
+                    <button>Delete</button>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+    <footer>
+
+    </footer>
+</body>
+</html>
