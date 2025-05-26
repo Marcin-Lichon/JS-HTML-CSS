@@ -44,6 +44,7 @@ app.post("/api/scores", (req, res) => {
 // DELETE - usuń wynik po ID
 app.delete("/api/scores/:id", (req, res) => {
   const scores = JSON.parse(fs.readFileSync(DB_FILE, "utf8"));
+  
   const updatedScores = scores.filter(
     (score) => score.id !== parseInt(req.params.id)
   );

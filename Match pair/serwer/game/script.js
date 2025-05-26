@@ -16,6 +16,7 @@ let nick;
 
 
 function StartGame(){
+    GetDataForInGameRank();
     CreateCards();
     mainScreen.classList.add('hidden');
     gameScreen.classList.remove('hidden');
@@ -24,6 +25,18 @@ function StartGame(){
 function ShowRankings(){
     mainScreen.classList.add('hidden');
     mainRankings.classList.remove('hidden');
+    GetDataForRanking();
+}
+
+function ReturnToMenu(){
+    mainScreen.classList.remove('hidden');
+    gameScreen.classList.add('hidden');
+    mainRankings.classList.add('hidden');
+    insertData.classList.add('hidden');
+    DeleteListnerFromCards();
+    DeleteCards();
+    RestartGameStats();
+    counter=0;
 }
 
 function CreateCards(){
@@ -53,10 +66,10 @@ function RandomizePairs(){
 }
 
 function RestartGame(){
-    DeleteCards();
     DeleteListnerFromCards();
+    DeleteCards();
     CreateCards();
-    RestartGameTimer();
+    RestartGameStats();
     counter=0;
 }
 
@@ -87,9 +100,9 @@ function FlipCard(e){
     clickedCard.classList.add("flipped");
 
      if (!firstCard){
-        firstCard = clickedCard;
-        return;
-    }
+            firstCard = clickedCard;
+            return;
+        }
 
     secondCard = clickedCard;
     lockGame = true;
@@ -102,7 +115,7 @@ function CheckCards(){
     if(firstCard.dataset.letter === secondCard.dataset.letter){
         firstCard.removeEventListener('click', FlipCard);
         secondCard.removeEventListener('click', FlipCard);
-        ResetBoard();
+        ResetingBoard();
         counter++;
         if(counter==8)
             GameEnding();
@@ -111,10 +124,9 @@ function CheckCards(){
         timerID = setTimeout(() => {
                 firstCard.classList.remove("flipped");
                 secondCard.classList.remove("flipped");
-                ResetBoard();
+                ResetingBoard();
             }, 1000);
     }
-    console.log(counter);
 }
 
 function CountingMoves()
@@ -123,22 +135,21 @@ function CountingMoves()
     document.getElementById("moves").innerText = 'Moves: ' + moves;
 }
 
-function ResetBoard() {
+function ResetingBoard() {
     [firstCard, secondCard] = [null, null];
     lockGame = false;
     clearTimeout(timerID);
 }
 
 function GameEnding(){
-    console.log("koniec");
     mainScreen.classList.add('hidden');
     insertData.classList.remove('hidden');
-    RestartGameTimer()
+    ShowEndingStats();
+    DeleteListnerFromCards();
 }
 
  function StartGameTimer(){
-    gameTime = 0;
-    document.getElementById("timer").innerText = "Time: 0 s";
+    gameTime = 0;   
 
     gameTimerInterval = setInterval(() => {
         gameTime++;
@@ -146,13 +157,21 @@ function GameEnding(){
     }, 1000);
  }
 
- function RestartGameTimer(){
+ function RestartGameStats(){
     document.getElementById("timer").innerText = "Time: 0 s";
-    clearInterval(gameTimerInterval);
-    gameTimerInterval=null;
     document.getElementById("moves").innerText = "Moves: 0";
+    clearInterval(gameTimerInterval);
+    gameTimerInterval = null;
+    moves=0;
+    gameTime=0;
 }
 
+function ShowEndingStats(){
+    document.getElementById("timer").innerText = "Time:" +gameTime+ "s";
+    document.getElementById("moves").innerText = "Moves: " + moves;
+    clearInterval(gameTimerInterval);
+    gameTimerInterval=null;
+}
 
 function GetNick(){
     nick = document.getElementById("nick").value.trim();
@@ -166,8 +185,9 @@ function GetNick(){
 }
 
 
- DownloadDataFromServer()
-function DownloadDataFromServer(){
+
+function GetDataForInGameRank(){
+    ShowLoader();
     fetch("/api/scores")
         .then((res)=>res.json())
         .then((data)=>{
@@ -180,33 +200,114 @@ function DownloadDataFromServer(){
 
                 const rankingText = document.createElement("div");
                 rankingText.classList.add("rankingText");
-                rankingText.textContent = `${entry.name} - ${entry.moves} ruchy, ${entry.gameTime}s`;
+                rankingText.textContent = `${entry.name} - ${entry.moves} ruchy, ${entry.time}s`;
 
                 rankingEntry.appendChild(rankingText);
                 rankingList.appendChild(rankingEntry);
             });
+        })
+        .catch((error) =>{
+            ShowError("Check your connection with server");
+        }).finally(()=>{
+             HideLoader();
         });
-
-
-
 }
 
 
+function GetDataForRanking(){
+    ShowLoader();
+    fetch("/api/scores")
+        .then((res) => res.json())
+        .then((data) => {
+            const rankingList = document.getElementById("rankings");
+            rankingList.innerHTML = "";  
+
+            data.forEach(entry => {       
+                const rankingEntry = document.createElement("div");
+                rankingEntry.classList.add("rankingEntry");
+
+                const rankingText = document.createElement("div");
+                rankingText.classList.add("rankingText");
+                rankingText.textContent = `${entry.name} - ${entry.moves} ruchy, ${entry.time}s`;
+
+                const deleteButtons = document.createElement("div");
+                deleteButtons.classList.add("deleteButton");
+
+                const deleteBtn = document.createElement("button");
+                deleteBtn.textContent = "Delete";
+
+                 const handler = function () {
+                    DeleteData(entry.id, handler, deleteBtn);
+                };
+
+                deleteBtn.addEventListener('click', handler);
+             
+                deleteButtons.appendChild(deleteBtn);
+
+                rankingEntry.appendChild(rankingText);
+                rankingEntry.appendChild(deleteButtons);
+                rankingList.appendChild(rankingEntry);
+            });
+        })
+        .catch((error) =>{
+            ShowError("Check your connection with server");
+        })
+        .finally(()=>{
+             HideLoader();
+        });
+}
+
 function SaveDataInAPI(){
+    ShowLoader();
     fetch("/api/scores", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({name: nick, moves, gameTime}),
-    })
+        body: JSON.stringify({name: nick, moves, time: gameTime}),
+        }).then(()=>{
+            RestartGameStats()
+        })
+        .catch((error) =>{
+            ShowError("Check your connection with server");
+        })
+        .finally(()=>{
+            HideLoader();
+        });
 }
 
-function DeleteData(){
-    fetch(`/api/scores/${id}`, {method: "DELETE"});
+
+
+function DeleteData(id, handler, deleteBtn){
+    ShowLoader();
+    fetch(`/api/scores/${id}`, { method: "DELETE" })
+        .then(() => {
+            deleteBtn.removeEventListener('click', handler);
+            GetDataForRanking();
+        })
+        .catch((error) =>{
+            ShowError("Check your connection with server");
+        }).finally(()=>{
+             HideLoader();
+        });
 }
- 
+
+function ShowError(message) {
+    alert("Error: " + message);
+}
+
+function ShowLoader() {
+    document.getElementById('loader').classList.remove('hidden');
+}
+
+function HideLoader() {
+    document.getElementById('loader').classList.add('hidden');
+}
+
+
 btnGameStart.addEventListener('click',StartGame);
 btnRankings.addEventListener('click',ShowRankings);
 btnRestartGame.addEventListener('click',RestartGame);
 btnSubmit.addEventListener('click',GetNick);
+btnBackToMenuFromGame.addEventListener('click', ReturnToMenu);
+btnBackToMenuFromRanking.addEventListener('click', ReturnToMenu);

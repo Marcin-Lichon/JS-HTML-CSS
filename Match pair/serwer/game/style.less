@@ -1,50 +1,15 @@
-@gap: 35px;
-@size: 190px;
-@cardColor: rgb(99, 32, 185);
-@fontOnCardsColor: #FFFF;
-
-#gameArea {
-    display: grid;
-    grid-template-columns: repeat(4, @size);
-    grid-template-rows: repeat(4, @size);
-    gap: @gap;
-}
-
-.card{
-    width: @size - 2 * @gap;
-    height: @size - 2 * @gap;
-    background-color: @cardColor;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: @cardColor;
-    border-radius: 12%;
-}
-
-.flipped{
-    width: @size - 2 * @gap;
-    height: @size - 2 * @gap;
-    background-color: @cardColor;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: @fontOnCardsColor;
-    border-radius: 12%;
-}
-
-// ------- ZMIENNE ------- //
 @gap: 15px;
 @size: 100px;
 
 @bgColor: #1e1e2f;
 @textColor: #f4f4f4;
-@accentColor: #4CAF50;
+@accentColor: #4caf50;
 @accentHover: #33df3c;
 @panelColor: #2e2e40;
 @cardColor: #6320b9;
 @cardText: #ffff;
 
-// ------- RESET & GLOBAL ------- //
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -67,7 +32,7 @@ body {
   display: none !important;
 }
 
-// ------- PRZYCISKI ------- //
+
 button {
   padding: 10px 20px;
   font-size: 1.2rem;
@@ -84,7 +49,7 @@ button {
   }
 }
 
-// ------- EKRAN STARTOWY ------- //
+
 #mainScreen {
   text-align: center;
   display: flex;
@@ -92,76 +57,50 @@ button {
   gap: 1rem;
 }
 
-
-// ------- RANKING W GRZE ------- //
-#inGameRakings {
-  margin-top: 30px;
-  text-align: center;
-
-  h1 {
-    margin-bottom: 1rem;
-  }
-
-  p {
-    background-color: @panelColor;
-    padding: 10px;
-    border-radius: 8px;
-    margin: 10px auto;
-    max-width: 300px;
-    display: flex;
-    justify-content: space-between;
-    font-size: 1.1rem;
-  }
+#gameScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-// ------- RANKING GŁÓWNY ------- //
+#gameArea {
+  display: grid;
+  grid-template-columns: repeat(4, @size);
+  grid-template-rows: repeat(4, @size);
+  gap: @gap;
+  margin-top: 20px;
+}
 
-#mainRankings {
-  margin-top: 30px;
-  text-align: center;
+.card {
+  width: calc(@size - 2 * @gap);
+  height: calc(@size - 2 * @gap);
+  background-color: @cardColor;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: @cardColor;
+  border-radius: 12%;
+  font-size: 2rem;
+  cursor: pointer;
+}
 
-  h1
-  {
-    margin-bottom: 30px;
-  }
+.flipped {
+  background-color: @cardColor;
+  color: @cardText;
+}
 
-  .rankingEntry {
-    margin-top: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: @panelColor;
-    padding: 10px 20px;
-    border-radius: 8px;
-    max-width: 500px;
+#timer, #moves {
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
 
-    .rankingText {
-      flex-grow: 1;
-      font-size: 1.1rem;
-      line-height: 1.5;
-      display: flex;
-      align-items: center;
-      height: 100%;
-    }
-
-    .deleteButton {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%; 
-      min-width: 80px; 
-    }
-
-    button {
-      padding: 8px 16px;
-      font-size: 1rem;
-      margin: 10px;
-    }
-  }
+.game-buttons {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
 }
 
 
-// ------- FORMULARZ WPROWADZANIA DANYCH ------- //
 #insertData {
   margin-top: 30px;
 
@@ -198,3 +137,63 @@ button {
   }
 }
 
+
+#inGameRakings {
+  margin-top: 30px;
+  text-align: center;
+}
+
+#inGameRakings p {
+  background-color: @panelColor;
+  padding: 10px;
+  border-radius: 8px;
+  margin: 10px auto;
+  max-width: 300px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.1rem;
+}
+
+
+#mainRankings {
+  margin-top: 30px;
+  text-align: center;
+
+  .rankingEntry {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: @panelColor;
+    padding: 10px 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .rankingText {
+      flex-grow: 1;
+      font-size: 1.1rem;
+      line-height: 1.5;
+      display: flex;
+      align-items: center;
+    }
+
+    .deleteButton {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 80px;
+    }
+
+    button {
+      padding: 8px 16px;
+      font-size: 1rem;
+      margin: 10px;
+    }
+  }
+
+  button {
+    margin-top: 20px;
+  }
+}
